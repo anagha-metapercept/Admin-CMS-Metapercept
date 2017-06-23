@@ -1,4 +1,37 @@
+<?php 
+ob_start();
+session_start();
+require_once('../inc/db.php');
 
+if(isset($_POST['submit'])){
+    $username = mysqli_real_escape_string($con, strtolower($_POST['username']));
+    $password = mysqli_real_escape_string($con, $_POST['password']);
+    
+    $check_username_query = "SELECT * FROM users WHERE username = '$username'";
+    $check_username_run = mysqli_query($con, $check_username_query);
+    if(mysqli_num_rows($check_username_run) > 0){
+        $row = mysqli_fetch_array($check_username_run);
+        $db_username = $row['username'];
+        $db_password = $row['password'];
+        $db_role = $row['role'];
+        
+        $password = crypt($password, $db_password);
+        
+        if($username == $db_username && $password == $db_password){
+            header('Location:index.php');
+            $_SESSION['username'] = $db_username;
+            $_SESSION['role'] = $db_role;
+        }
+        else{
+            $error = "Wrong Username or Password";
+        }
+    }
+    else {
+        $error = "Wrong Username or Password";
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,18 +66,23 @@
 
     <div class="container">
 
-      <form class="form-signin animated shake">
+      <form class="form-signin animated shake" action="" method="post">
         <h2 class="form-signin-heading">Admin sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputEmail" class="sr-only">Username</label>
+        <input type="text" id="inputEmail" class="form-control" name="username" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
         <div class="checkbox">
           <label>
-            <input type="checkbox" value="remember-me"> Remember me
+           <?php 
+              if(isset($error)){
+                  echo $error;
+              }
+              
+              ?>
           </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <input type="submit" class="btn btn-lg btn-primary btn-block" name="submit" value="Sign In">
       </form>
 
     </div> <!-- /container -->

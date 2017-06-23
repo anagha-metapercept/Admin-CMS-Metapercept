@@ -16,7 +16,7 @@
         <li><a href="#"><i class="fa fa-plus-square"></i> Add Post</a></li>
         <li><a href="add-user.php"><i class="fa fa-user-plus"></i> Add User</a></li>
         <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
-        <li><a href="#"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a></li>
+        <li><a href="logout.php"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a></li>
       </ul>
     </div>
   </div>

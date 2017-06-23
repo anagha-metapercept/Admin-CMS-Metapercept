@@ -1,4 +1,10 @@
-<?php require_once('inc\top.php'); ?>
+<?php 
+require_once('inc\top.php'); 
+if(!isset($_SESSION["username"])){
+    header('Location:login.php');
+}
+
+?>
   </head>
   <body>
       <div id="wrapper">
