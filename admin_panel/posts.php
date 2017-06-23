@@ -3,45 +3,53 @@
 if(!isset($_SESSION['username'])){
     header('Location:login.php');
 }
-else if(isset($_SESSION['username']) && $_SESSION['role']=='author'){
-    header('Location:index.php');
-}
+
 ?>
 <?php
+
+$session_username = $_SESSION['username'];
+
 if(isset($_GET['del'])){
     $del_id = $_GET['del'];
-    $del_check_query = "SELECT * FROM users WHERE id = $del_id";
-    $del_check_run = mysqli_query($con, $del_check_query);
+    if($_SESSION['role'] == 'admin'){
+         $del_check_query = "SELECT * FROM posts WHERE id = $del_id";
+         $del_check_run = mysqli_query($con, $del_check_query);
+    }
+    else if($_SESSION['role'] == 'author'){
+         $del_check_query = "SELECT * FROM posts WHERE id = $del_id and author = '$session_username'";
+         $del_check_run = mysqli_query($con, $del_check_query);
+    }
     if(mysqli_num_rows($del_check_run) > 0){
-        $del_query = "DELETE FROM `users` WHERE `users`.`id` = $del_id";
-        if(isset($_SESSION['username']) && $_SESSION['role']=='admin'){
-            if(mysqli_query($con, $del_query)){
-                $msg = "User has been deleted";
-            }   
-            else {
-                $error = "User has not been deleted";
-            }
+        $del_query = "DELETE FROM `posts` WHERE `posts`.`id` = $del_id";
+        if(mysqli_query($con, $del_query)){
+            $msg = "Post has been deleted";
         }
+        else {
+            $error = "Post has not been deleted";
+        }
+
     }
     else{
-        header('location: index.php');
+        header('Location: index.php');
     }
+        
 }
+
 if(isset($_POST['checkboxes'])){
     
     foreach($_POST['checkboxes'] as $user_id){
         $bulk_option = $_POST['bulk-options'];
         
         if($bulk_option == 'delete'){
-            $bulk_del_query = "DELETE FROM `users` WHERE `users`.`id` = $user_id";
+            $bulk_del_query = "DELETE FROM `posts` WHERE `posts`.`id` = $user_id";
             mysqli_query($con, $bulk_del_query);
         }
-        else if($bulk_option == 'author'){
-             $bulk_author_query = "UPDATE `users` SET `role` = 'author' WHERE `users`.`id` = $user_id";
+        else if($bulk_option == 'publish'){
+             $bulk_author_query = "UPDATE `posts` SET `status` = 'publish' WHERE `posts`.`id` = $user_id";
              mysqli_query($con, $bulk_author_query);
         }
-        else if($bulk_option == 'admin'){
-            $bulk_admin_query = "UPDATE `users` SET `role` = 'admin' WHERE `users`.`id` = $user_id";
+        else if($bulk_option == 'draft'){
+            $bulk_admin_query = "UPDATE `posts` SET `status` = 'draft' WHERE `posts`.`id` = $user_id";
              mysqli_query($con, $bulk_admin_query);
         }
     }
@@ -61,14 +69,23 @@ if(isset($_POST['checkboxes'])){
                         <?php require_once('inc\sidebar.php'); ?>
                     </div>
                     <div class="col-md-9">
-                        <h1><i class="fa fa-users"></i> Users    <small>View All Users</small></h1><hr>
+                        <h1><i class="fa fa-file"></i> Posts    <small>View All Posts</small></h1><hr>
                         <ol class="breadcrumb">
-                          <li><a href="index.php"><i class="fa fa-tachometer"></i>Dashboard</a></li>
-                          <li class="active"><i class="fa fa-users"></i>Users</li>
+                          <li><a href="index.php"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+                          <li class="active"><i class="fa fa-file"></i> Posts</li>
                         </ol>
                         
-                        <?php $query = "select * from users order by id desc"; 
-                        $run = mysqli_query($con, $query);
+                        <?php 
+                        if($_SESSION['role'] == 'admin'){
+                            $query = "select * from posts order by id desc"; 
+                            $run = mysqli_query($con, $query);
+                        
+                        }
+                        else if($_SESSION['role']=='author'){
+                            $query = "select * from posts where author = '$session_username' order by id desc"; 
+                            $run = mysqli_query($con, $query);
+                        
+                        }
                         if(mysqli_num_rows($run) > 0){
                         ?>
                     <form action="" method="post">
@@ -80,14 +97,14 @@ if(isset($_POST['checkboxes'])){
                                             <div class="form-group">
                                                 <select name="bulk-options" id="" class="form-control">
                                                     <option value="delete">Delete</option>
-                                                    <option value="author">Change to Author</option>
-                                                    <option value="admin">Change to Admin</option>
+                                                    <option value="publish">Publish</option>
+                                                    <option value="draft">Draft</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-xs-8">
                                             <input type="submit" class="btn btn-success" value="Apply">
-                                            <a href="add-user.php" class="btn btn-primary">Add New</a>
+                                            <a href="#" class="btn btn-primary">Add New</a>
                                         </div>
                                     </div>
                                
@@ -107,12 +124,12 @@ if(isset($_POST['checkboxes'])){
                                     <th><input type="checkbox" id="selectallboxes"></th>
                                     <th>Sr.No</th>
                                     <th>Date</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
                                     <th>Image</th>
-                                    <th>Password</th>
-                                    <th>Role</th>
+                                    <th>Categories</th>
+                                    <th>Views</th>
+                                    <th>Status</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -121,11 +138,11 @@ if(isset($_POST['checkboxes'])){
                                <?php 
                                 while($row = mysqli_fetch_array($run)){
                                     $id = $row['id'];
-                                    $first_name = ucfirst($row['first_name']);
-                                    $last_name = ucfirst($row['last_name']);
-                                    $email = $row['email'];
-                                    $username = $row['username'];
-                                    $role = $row['role'];
+                                    $title = $row['title'];
+                                    $author = $row['author'];
+                                    $views = $row['views'];
+                                    $categories = $row['categories'];
+                                    $status = $row['status'];
                                     $image = $row['image'];
                                     $date = getDate($row['date']);
                                     $day = $date['mday'];
@@ -138,14 +155,21 @@ if(isset($_POST['checkboxes'])){
                                     <td><input type="checkbox" class = "checkboxes" name="checkboxes[]" value= "<?php echo $id; ?>"></td>
                                     <td><?php echo $id; ?></td>
                                     <td><?php echo "$day $month $year"; ?></td>
-                                    <td><?php echo "$first_name $last_name"; ?></td>
-                                    <td><?php echo $username; ?></td>
-                                    <td><?php echo $email; ?></td>
+                                    <td><?php echo "$title"; ?></td>
+                                    <td><?php echo $author; ?></td>
                                     <td><img src="img/<?php echo $image; ?>" width="30px"></td>
-                                    <td><?php echo "*******"; ?></td>
-                                    <td><?php echo ucfirst($role); ?></td>
-                                    <td><a href="edit-user.php?edit=<?php echo $id; ?>"><i class="fa fa-pencil"></i></a></td>
-                                    <td><a href="users.php?del=<?php echo $id; ?>"><i class="fa fa-times"></i></a></td>
+                                    <td><?php echo $categories; ?></td>
+                                    <td><?php echo $views; ?></td>
+                                    <td><span style="color:<?php 
+                                            if($status == 'publish'){
+                                                echo 'green';
+                                            }
+                                            else if($status == 'draft') {
+                                                echo 'red';
+                                            }
+                                        ?>;"><?php echo ucfirst($status); ?></span></td>
+                                    <td><a href="edit-post.php?edit=<?php echo $id; ?>"><i class="fa fa-pencil"></i></a></td>
+                                    <td><a href="posts.php?del=<?php echo $id; ?>"><i class="fa fa-times"></i></a></td>
                                 </tr>
                                 <?php                  
                                 }

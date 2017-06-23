@@ -1,4 +1,8 @@
-<?php require_once('../inc/db.php'); ?>
+<?php 
+ob_start();
+session_start();
+require_once('../inc/db.php'); 
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
