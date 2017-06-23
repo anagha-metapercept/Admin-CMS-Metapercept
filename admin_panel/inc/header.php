@@ -15,7 +15,11 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="posts.php"><i class="fa fa-plus-square"></i> Add Post</a></li>
         <li><a href="add-user.php"><i class="fa fa-user-plus"></i> Add User</a></li>
+<<<<<<< HEAD
         <li><a href="profile.php"><i class="fa fa-user"></i> Profile</a></li>
+=======
+        <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+>>>>>>> 1a54db613935f810bb61415231b35ec13ec7682d
         <li><a href="logout.php"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a></li>
       </ul>
     </div>
