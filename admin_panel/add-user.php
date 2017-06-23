@@ -3,12 +3,9 @@
 if(!isset($_SESSION['username'])){
     header('Location:login.php');
 }
-<<<<<<< HEAD
 else if(isset($_SESSION['username']) && $_SESSION['role']=='author'){
     header('Location:index.php');
 }
-=======
->>>>>>> 1a54db613935f810bb61415231b35ec13ec7682d
 ?>
   </head>
   <body>

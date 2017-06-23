@@ -4,11 +4,7 @@ if(!isset($_SESSION['username'])){
     header('Location:login.php');
 }
 else if(isset($_SESSION['username']) && $_SESSION['role']=='author'){
-<<<<<<< HEAD
     header('Location:index.php');
-=======
-    header('Location:login.php');
->>>>>>> 1a54db613935f810bb61415231b35ec13ec7682d
 }
 ?>
 <?php
