@@ -63,9 +63,9 @@ if(isset($_GET['post_id'])){
                             </div>
                         </div>
                         <a href="img/<?php echo $image; ?>"><img src="img/<?php echo $image; ?>" alt="Post Image"></a>
-                        <p class="desc">
+                        <div class="desc">
                             <?php echo $post_data; ?>
-                        </p>
+                        </div>
                         
                         <div class="bottom">
                             <span class="first"><i class="fa fa-folder"></i><a href="#"> <?php echo ucfirst($categories); ?></a></span> |
