@@ -104,7 +104,11 @@ if(isset($_POST['checkboxes'])){
                                         </div>
                                         <div class="col-xs-8">
                                             <input type="submit" class="btn btn-success" value="Apply">
+<<<<<<< HEAD
                                             <a href="add-post.php" class="btn btn-primary">Add New</a>
+=======
+                                            <a href="#" class="btn btn-primary">Add New</a>
+>>>>>>> 09b550bcb586d14052c7e49a1014e19c2d671567
                                         </div>
                                     </div>
                                
