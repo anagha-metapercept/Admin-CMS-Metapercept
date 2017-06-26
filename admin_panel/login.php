@@ -23,7 +23,7 @@ if(isset($_POST['submit'])){
             $_SESSION['role'] = $db_role;
         }
         else{
-            $error = "Wrong Username or Password";
+            $error = "Wrong Username or Password"; 
         }
     }
     else {

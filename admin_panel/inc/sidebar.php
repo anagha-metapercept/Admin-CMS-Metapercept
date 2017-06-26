@@ -3,9 +3,13 @@
      <i class="fa fa-tachometer"></i>
       Dashboard
   </a>
-  <a href="#" class="list-group-item"> 
+  <a href="posts.php" class="list-group-item"> 
       <span class="badge">14</span>
       <i class="fa fa-file-text"></i> All Posts 
+  </a>
+   <a href="media.php" class="list-group-item"> 
+      <span class="badge">14</span>
+      <i class="fa fa-database"></i> Media
   </a>
   <a href="#" class="list-group-item">
       <span class="badge">25</span>
