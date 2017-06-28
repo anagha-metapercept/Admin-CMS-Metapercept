@@ -4,6 +4,24 @@ if(!isset($_SESSION["username"])){
     header('Location:login.php');
 }
 
+$session_username = $_SESSION['username'];
+$query = "SELECT * FROM users WHERE username = '$session_username'";
+$run = mysqli_query($con, $query);
+$row = mysqli_fetch_array($run);
+
+$image = $row['image'];
+$id = $row['id'];
+$date = getdate($row['date']);
+$day = $date['mday'];
+$month = substr($date['month'],0,3);
+$year = $date['year'];
+$first_name = $row['first_name'];
+$last_name = $row['last_name'];
+$username = $row['username'];
+$email = $row['email'];
+$role = $row['role'];
+$details = $row['details'];
+
 ?>
   </head>
   <body id="profile">
@@ -23,9 +41,9 @@ if(!isset($_SESSION["username"])){
                         
                         <div class="row">
                             <div class="col-xs-12">
-                                <center><img src="img/profile-black.jpg" class="img-circle img-thumbnail" width="200px" alt="" id="profile-image"></center>
+                                <center><img src="img/<?php echo $image; ?>" class="img-circle img-thumbnail" width="200px" alt="" id="profile-image"></center>
                                 <br><br>
-                                <a href="#" class="btn btn-primary pull-right">Edit Profile</a><hr>
+                                <a href="edit_profile.php?edit=<?php echo $id ;?>" class="btn btn-primary pull-right">Edit Profile</a><hr>
                                 <center>
                                     <h3>Profile Details</h3>
                                 </center>
@@ -33,25 +51,25 @@ if(!isset($_SESSION["username"])){
                                 <table class="table table-bordered">
                                     <tr>
                                         <td width="20%"><b>User ID:</b></td>
-                                        <td width="30%">12</td>
+                                        <td width="30%"><?php echo $id; ?></td>
                                         <td width="20%"><b>Signup Date:</b></td>
-                                        <td width="30%">12 Dec 15</td>
+                                        <td width="30%"><?php echo "$day $month $year";?>
                                     </tr>
                                     <tr>
                                         <td width="20%"><b>First Name</b></td>
-                                        <td width="30%">Anagha</td>
+                                        <td width="30%"><?php echo $first_name; ?></td>
                                         <td width="20%"><b>Last Name:</b></td>
-                                        <td width="30%">Deshpande</td>
+                                        <td width="30%"><?php echo $last_name; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="20%"><b>Username:</b></td>
-                                        <td width="30%">anagha123</td>
+                                        <td width="30%"><?php echo $username; ?></td>
                                         <td width="20%"><b>Email:</b></td>
-                                        <td width="30%">anagha@gmail.com</td>
+                                        <td width="30%"><?php echo $email; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="20%"><b>Role:</b></td>
-                                        <td width="30%">Admin</td>
+                                        <td width="30%"><?php echo $role; ?></td>
                                         <td width="20%"><b></b></td>
                                         <td width="30%"></td>
                                     </tr>
@@ -59,7 +77,7 @@ if(!isset($_SESSION["username"])){
                                 <div class="row">
                                     <div class="col-lg-8 col-sm-12">
                                         <b>Details:</b>
-                                        <div>Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..Hello World..
+                                        <div><?php echo $details; ?>
                                         </div>
                                     </div>
                                 </div>

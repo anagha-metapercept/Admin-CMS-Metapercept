@@ -3,7 +3,7 @@
   <body>
 <?php require_once('inc\header.php');
       
-      $number_of_posts = 3;
+      /*$number_of_posts = 3;
       
       if(isset($_GET['page'])){
           $page_id = $_GET['page'];
@@ -39,11 +39,11 @@
           $total_pages = ceil($all_posts / $number_of_posts);
           $posts_start_from = ($page_id - 1) * $number_of_posts; 
       }
-     
+*/     
       
 ?>
     
-    <div class="jumbotron">
+    <!--div class="jumbotron">
         <div class="container">
             <div id="details" class="animated fadeInLeft">
                 <h1>Anagha's<span> Blog</span></h1>
@@ -51,8 +51,18 @@
             </div>
         </div>
         <img src="img/top-image.jpg" alt="Top Image">
-    </div>
-    
+    </div-->
+    <div class="container-fluid">
+       <div class="bg_container">
+            <video id= "bg" src ="videos/video.mp4" autoplay=-"true" muted = "true" loop></video>
+            <!--iframe id="bg" src="https://www.youtube.com/embed/XYRGcnNbrgk?autoplay=1&amp;controls=0&amp;loop=1&amp;mute=0" frameborder="0" allowfullscreen></iframe-->
+        </div>
+        <div id="content" >
+            <h1>Web page with video background</h1>
+            <h2>Using css video placed underneath our html content</h2>    
+        </div>
+
+    </div>    
     <section>
         <div class="container">
             <div class="row">

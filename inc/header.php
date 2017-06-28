@@ -1,4 +1,5 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="header">
+ <nav class="navbar navbar-inverse navbar-fixed navbar-fixed-top">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -9,8 +10,8 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="index.php">
-          <div class="col-xs-3"><img src="img/logo.png" alt="logo" width="30px"></div>
-          <div class="col-xs-9">Anagha's Blog</div>
+          <div class="col-xs-4"><img src="img/Logo1.png" alt="logo" width="80%" height="80%"></div>
+          <div class="col-xs-8"></div>
       </a>
     </div>
 
@@ -43,3 +44,4 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+</div>
