@@ -30,7 +30,11 @@ if(!isset($_SESSION["username"])){
                                     
                                     $query = "INSERT INTO media (image) VALUES ('$image')";
                                     if(mysqli_query($con, $query)){
-                                        move_uploaded_file($tmp_name, "media/$image");
+                                        $path = "media/$image";
+                                        if(move_uploaded_file($tmp_name, $path)){
+                                            copy($path, "../$path");
+                                        }
+                                        
                                     }
                                 }
                             }
