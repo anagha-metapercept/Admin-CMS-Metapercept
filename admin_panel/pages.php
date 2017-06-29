@@ -12,20 +12,20 @@ $session_username = $_SESSION['username'];
 if(isset($_GET['del'])){
     $del_id = $_GET['del'];
     if($_SESSION['role'] == 'admin'){
-         $del_check_query = "SELECT * FROM posts WHERE id = $del_id";
+         $del_check_query = "SELECT * FROM pages WHERE id = $del_id";
          $del_check_run = mysqli_query($con, $del_check_query);
     }
     else if($_SESSION['role'] == 'author'){
-         $del_check_query = "SELECT * FROM posts WHERE id = $del_id and author = '$session_username'";
+         $del_check_query = "SELECT * FROM pages WHERE id = $del_id and author = '$session_username'";
          $del_check_run = mysqli_query($con, $del_check_query);
     }
     if(mysqli_num_rows($del_check_run) > 0){
-        $del_query = "DELETE FROM `posts` WHERE `posts`.`id` = $del_id";
+        $del_query = "DELETE FROM `pages` WHERE `pages`.`id` = $del_id";
         if(mysqli_query($con, $del_query)){
-            $msg = "Post has been deleted";
+            $msg = "Page has been deleted";
         }
         else {
-            $error = "Post has not been deleted";
+            $error = "Page has not been deleted";
         }
 
     }
@@ -41,15 +41,15 @@ if(isset($_POST['checkboxes'])){
         $bulk_option = $_POST['bulk-options'];
         
         if($bulk_option == 'delete'){
-            $bulk_del_query = "DELETE FROM `posts` WHERE `posts`.`id` = $user_id";
+            $bulk_del_query = "DELETE FROM `pages` WHERE `pages`.`id` = $user_id";
             mysqli_query($con, $bulk_del_query);
         }
         else if($bulk_option == 'publish'){
-             $bulk_author_query = "UPDATE `posts` SET `status` = 'publish' WHERE `posts`.`id` = $user_id";
+             $bulk_author_query = "UPDATE `pages` SET `status` = 'publish' WHERE `pages`.`id` = $user_id";
              mysqli_query($con, $bulk_author_query);
         }
         else if($bulk_option == 'draft'){
-            $bulk_admin_query = "UPDATE `posts` SET `status` = 'draft' WHERE `posts`.`id` = $user_id";
+            $bulk_admin_query = "UPDATE `pages` SET `status` = 'draft' WHERE `pages`.`id` = $user_id";
              mysqli_query($con, $bulk_admin_query);
         }
     }
@@ -69,16 +69,24 @@ if(isset($_POST['checkboxes'])){
                         <?php require_once('inc\sidebar.php'); ?>
                     </div>
                     <div class="col-md-9">
-                        <h1><i class="fa fa-cog"></i> Services    <small>View All Services</small></h1><hr>
+                        <h1><i class="fa fa-file-text"></i> Pages    <small>View All Pages</small></h1><hr>
                         <ol class="breadcrumb">
                           <li><a href="index.php"><i class="fa fa-tachometer"></i> Dashboard</a></li>
-                          <li class="active"><i class="fa fa-cog"></i> Services</li>
+                          <li class="active"><i class="fa fa-file-text"></i> Pages</li>
                         </ol>
                         
                         <?php 
-                            $query = "select * from services order by id desc"; 
+                        if($_SESSION['role'] == 'admin'){
+                            $query = "select * from pages order by id desc"; 
                             $run = mysqli_query($con, $query);
-                                if(mysqli_num_rows($run) > 0){
+                        
+                        }
+                        else if($_SESSION['role']=='author'){
+                            $query = "select * from pages where author = '$session_username' order by id desc"; 
+                            $run = mysqli_query($con, $query);
+                        
+                        }
+                        if(mysqli_num_rows($run) > 0){
                         ?>
                     <form action="" method="post">
                         <div class="row">
@@ -96,7 +104,7 @@ if(isset($_POST['checkboxes'])){
                                         </div>
                                         <div class="col-xs-8">
                                             <input type="submit" class="btn btn-success" value="Apply">
-                                            <a href="add_services.php" class="btn btn-primary">Add New</a>
+                                            <a href="add_pages.php" class="btn btn-primary">Add New</a>
                                         </div>
                                     </div>
                                
@@ -116,10 +124,11 @@ if(isset($_POST['checkboxes'])){
                                     <th><input type="checkbox" id="selectallboxes"></th>
                                     <th>Sr.No</th>
                                     <th>Date</th>
-                                    <th>Service Name</th>
-                                    <th>Featured Image</th>
-                                    <th>Tag Line</th>
-                                    <th>Description</th>
+                                    <th>Author</th>
+                                    <th>Title</th>
+                                    <th>Page Type</th>
+                                    <th>Image</th>
+                                    <th>Status</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -128,11 +137,12 @@ if(isset($_POST['checkboxes'])){
                                <?php 
                                 while($row = mysqli_fetch_array($run)){
                                     $id = $row['id'];
-                                    $service_name = $row['service_name'];
-                                    $tag_line = $row['tag_line'];
-                                    $description = $row['description'];
-                                    $featured_image = $row['featured_image'];
-                                    $date = getDate($row['date']);
+                                    $page_title = $row['page_title'];
+                                    $page_author = $row['page_author'];
+                                    $page_type = $row['page_type'];
+                                    $page_status = $row['page_status'];
+                                    $image = $row['page_image'];
+                                    $date = getDate($row['page_date']);
                                     $day = $date['mday'];
                                     $month = substr($date['month'],0,3);
                                     $year = $date['year'];
@@ -143,20 +153,20 @@ if(isset($_POST['checkboxes'])){
                                     <td><input type="checkbox" class = "checkboxes" name="checkboxes[]" value= "<?php echo $id; ?>"></td>
                                     <td><?php echo $id; ?></td>
                                     <td><?php echo "$day $month $year"; ?></td>
-                                    <td><?php echo "$service_name"; ?></td>
-                                    <td><img src="media/<?php echo $featured_image; ?>" width="30px"></td>
-                                    <td><?php echo $tag_line; ?></td>
-                                    <td><?php echo substr($description,0,50); ?></td>
-                                    <!--td><span style="color:<?php 
-                                            /*if($status == 'publish'){
+                                    <td><?php echo $page_author; ?></td>
+                                    <td><?php echo "$page_title"; ?></td>
+                                    <td><?php echo $page_type; ?></td>
+                                    <td><img src="img/<?php echo $image; ?>" width="30px"></td>
+                                    <td><span style="color:<?php 
+                                            if($status == 'publish'){
                                                 echo 'green';
                                             }
                                             else if($status == 'draft') {
                                                 echo 'red';
                                             }
-                                        ?>;"><?php echo ucfirst($status); */?></span></td-->
-                                    <td><a href="edit_services.php?edit=<?php echo $id; ?>"><i class="fa fa-pencil"></i></a></td>
-                                    <td><a href="services.php?del=<?php echo $id; ?>"><i class="fa fa-times"></i></a></td>
+                                        ?>;"><?php echo ucfirst($page_status); ?></span></td>
+                                    <td><a href="edit_page.php?edit=<?php echo $id; ?>"><i class="fa fa-pencil"></i></a></td>
+                                    <td><a href="pages.php?del=<?php echo $id; ?>"><i class="fa fa-times"></i></a></td>
                                 </tr>
                                 <?php                  
                                 }
@@ -166,7 +176,7 @@ if(isset($_POST['checkboxes'])){
                         <?php
                              }
                         else{
-                            echo "<center><h2>No Services available Now.</h2></center>";
+                            echo "<center><h2>No Pages available Now.</h2></center>";
                         }
                         ?>
                          </form>
