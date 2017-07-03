@@ -77,7 +77,6 @@ tinymce.init({
         <?php
         while($media_row = mysqli_fetch_array($media_run)){
             $media_name = $media_row['image'];
-        
         ?>
     {title: '<?php echo $media_name;?>', value: 'media/<?php echo $media_name;?>'},
    
@@ -89,6 +88,6 @@ tinymce.init({
         }
     ?>
 });
-</script>
+</script
 </body>
 </html>

@@ -147,11 +147,11 @@ if(isset($_GET['edit'])){
                                         </div>
                                          <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="status">Status:*</label>
-                                               <select class="form-control" name="status" id="status">
-                                                   <option value="publish" <?php if(isset($status) and $status == 'publish'){echo "selected"; }?>>Publish</option>
-                                                   <option value="draft" <?php if(isset($status) and $status == 'draft'){echo "selected"; }?>>Draft</option>
-                                               </select>
+                                                    <label for="status">Status:*</label>
+                                                   <select class="form-control" name="status" id="status">
+                                                       <option value="publish" <?php if(isset($status) and $status == 'publish'){echo "selected"; }?>>Publish</option>
+                                                       <option value="draft" <?php if(isset($status) and $status == 'draft'){echo "selected"; }?>>Draft</option>
+                                                   </select>
                                             </div>
                                         </div>
                                         <input type="submit" class = "btn btn-primary" value="Update Post" name="update">

@@ -1,6 +1,11 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    padding-top: 40px;
+}
 body {
     font-family: 'Oswald', sans-serif;   
-    background: #EEEDED;
+    background: #000;
 }
 
 a {
@@ -11,31 +16,95 @@ a:hover {
     color: blueviolet;
 }
 
+.main-container {
+    min-height: 800px;
+    background: white;
+}
+
+/*----------css for navigation bar-----------*/
+.navbar {
+    height: 80px;
+}
+
+.navbar-collapse {
+    padding-top: 17px;
+}
+.navbar-inverse {
+    background-color: white;
+    border: none;
+}
 .navbar-brand img{
     margin-top: -5px;
 }
 
+.navbar-brand {
+    height: 39px;
+    padding: 11px 0px;
+}
+
+.navbar > .container .navbar-brand {
+    margin-left: -40px;
+    margin-top: -40px;
+}
 .navbar-brand *{
-    color: white;
+    color: black;
 }
 
+.navbar-inverse .navbar-nav > li > a {
+    color: black;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: red;
+}
+/*--------navigation bar css ends here --------*/
+
+/*------ css for main image and content over it------*/
 .jumbotron {
-    height: 200px;
+    height: 500px;
     overflow: hidden;
+    background: transparent;
 }
 
-.jumbotron #details {
+.jumbotron #content {
     position: absolute;
     color: white;
 }
-
-.jumbotron #details span{
-    color: blueviolet;
+.jumbotron #content p {
+    background: gray;  
+    opacity: 0.9;
+    width: auto;
+    text-align: center;
+}
+.jumbotron #content span{
+    
+    color: red;
 }
 
 .jumbotron img {
     width: 100%;
 }
+
+/*--*-css for video -*--*/
+#bg {
+    width:100%;
+}
+
+#content{
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    width: 40%;
+    text-align: center;
+    color: #fff;
+}
+#bg_container{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/*------------ css for image ends here---------------*/
 
 section .widgets{
     margin-bottom: 20px;
@@ -343,9 +412,8 @@ footer {
 
 
 
-
-
-
-
-
-
+@media screen and (min-width: 768px){
+    .jumbotron {
+        padding-top: 0px;
+    }
+}

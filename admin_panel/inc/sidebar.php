@@ -12,12 +12,17 @@ $num_rows = mysqli_num_rows($get_comment_run);
      <i class="fa fa-tachometer"></i>
       Dashboard
   </a>
+  <a href="pages.php" class="list-group-item"> 
+      <i class="fa fa-file-text"></i> All Pages 
+  </a>  
   <a href="posts.php" class="list-group-item"> 
-      
-      <i class="fa fa-file-text"></i> All Posts 
+      <i class="fa fa-file"></i> All Posts 
   </a>
    <a href="media.php" class="list-group-item">
       <i class="fa fa-database"></i> Media
+  </a>
+  <a href="services.php" class="list-group-item">
+      <i class="fa fa-cog"></i> Services
   </a>
   
   <?php
