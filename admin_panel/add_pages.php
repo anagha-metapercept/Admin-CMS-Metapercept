@@ -17,7 +17,6 @@ $session_author_image = $_SESSION['author_image'];
            <?php require_once('inc\header.php'); ?>
             <div class="container-fluid body-section">
                 <div class="row">
-<<<<<<< HEAD
                     <div class="col-md-2">.
                         <?php require_once('inc\sidebar.php');?>
                     </div>
@@ -25,15 +24,6 @@ $session_author_image = $_SESSION['author_image'];
                         <h1><i class="fa fa-plus-square"></i> Add Pages <small>Add New Page</small></h1><hr>
                         <ol class="breadcrumb">
                           <li><a href="index.php"><i class="fa fa-tachometer"></i> Dashboard</a></li>
-=======
-                    <div class="col-md-3">.
-                        <?php require_once('inc\sidebar.php');?>
-                    </div>
-                    <div class="col-md-9">
-                        <h1><i class="fa fa-plus-square"></i> Add Pages <small>Add New Page</small></h1><hr>
-                        <ol class="breadcrumb">
-                          <li><a href="index.html"><i class="fa fa-tachometer"></i> Dashboard</a></li>
->>>>>>> 693688f0f906cd58cc5ccdf19d1fefd4825e1ab0
                           <li class="active"><i class="fa fa-plus-square"></i> Add Page</li>
                         </ol>
                         
