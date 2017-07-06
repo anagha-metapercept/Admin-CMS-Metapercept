@@ -2,6 +2,8 @@
 </div>   
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/jquery-ui.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
 
@@ -77,7 +79,6 @@ tinymce.init({
         <?php
         while($media_row = mysqli_fetch_array($media_run)){
             $media_name = $media_row['image'];
-        
         ?>
     {title: '<?php echo $media_name;?>', value: 'media/<?php echo $media_name;?>'},
    
@@ -89,6 +90,6 @@ tinymce.init({
         }
     ?>
 });
-</script>
+</script
 </body>
 </html>

@@ -21,8 +21,8 @@ $num_rows = mysqli_num_rows($get_comment_run);
    <a href="media.php" class="list-group-item">
       <i class="fa fa-database"></i> Media
   </a>
-  <a href="services.php" class="list-group-item">
-      <i class="fa fa-cog"></i> Services
+  <a href="nav-menu.php" class="list-group-item"> 
+      <i class="fa fa-bars"></i> Menus
   </a>
   
   <?php
