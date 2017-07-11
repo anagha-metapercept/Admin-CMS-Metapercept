@@ -13,7 +13,7 @@ if(!isset($_SESSION['username'])){
 ?>
 
 <?php
-$session_username = $_SESSION['username'];
+/*$session_username = $_SESSION['username'];
 if(isset($_POST['add_menu'])){
     if(isset($_POST['checkboxes'])){
         foreach($_POST['checkboxes'] as $id){
@@ -31,7 +31,7 @@ if(isset($_POST['add_menu'])){
         mysqli_query($con, $insert_query);         
         }
     }
-}
+}*/
 ?> 
 
 
@@ -78,7 +78,7 @@ if(isset($_POST['add_menu'])){
                                          <div class="menu_top">
                                               <label for="heading" style="padding:5px;"> Menu Name : </label>
 
-                                              <select name="heading1" id="" class="heading1">
+                                              <select name="heading1" id="heading1" class="heading1">
                                              <?php
                                                  $menu_query = "SELECT * FROM `menus`"; 
                                                  $menu_run = mysqli_query($con, $menu_query);    
@@ -92,7 +92,7 @@ if(isset($_POST['add_menu'])){
                                                     }
                                                  ?>
                                                 </select>
-                                                <input type="submit" id = "edit_menu" class="btn btn-primary" name="edit_menu" value="Edit Menu" onclick="showList('list')">
+                                                <input type="button" id = "edit_menu" class="btn btn-primary" name="edit_menu" value="Edit Menu" onclick="getData()">
                                           </div>
                                     </div>
                                    <div class="col-md-3">
@@ -135,7 +135,7 @@ if(isset($_POST['add_menu'])){
                                    <div class="col-md-9">
                                        <div class="menu_management">
                                             <div class="menu_top">
-                                                <input type="submit" class="btn btn-primary btn-md pull-right" name="save_menu" value="Save Menu">
+                                                <input type="button" class="btn btn-primary btn-md pull-right" name="save_menu" value="Save Menu">
                                             </div>                                                                  
                                                <div class="menu_body" id="result">
                                                    <label for="heading" style="padding:5px;"><h4>Menu Structure </h4> </label>
@@ -153,7 +153,7 @@ if(isset($_POST['add_menu'])){
                                                    ?>
                                                    <div id="list">
                                                         <?php
-                                                            if(isset($_POST['heading1']) || isset($_POST['edit_menu']) || isset($_POST['add_menu'])){
+                                                            /*if(isset($_POST['heading1']) || isset($_POST['edit_menu']) || isset($_POST['add_menu'])){
                                                                 $heading = $_POST['heading1'];
 
                                                                 $query1 = "select * from nav_menu where menu_heading = '$heading'"; 
@@ -166,7 +166,7 @@ if(isset($_POST['add_menu'])){
                                                                     }
                                                                     }
                                                                 
-                                                                ?>
+                                                               */?>
                                                     </div>
                                                </div>
                                         </div>
@@ -182,26 +182,46 @@ if(isset($_POST['add_menu'])){
       </div> 
 
 <?php require_once('inc\footer.php'); ?>
-<script type="text/javascript">
-    function showList(id) {
-        document.getElementById(id).innerHTML = document.getElementById('list').innerHTML ;
-    }
-    
-    $( document ).ready(function() {
-        var data = "<?php
-                    if(isset($_POST['heading1']) || isset($_POST['edit_menu']) || isset($_POST['add_menu'])){
-                        $heading = $_POST['heading1'];
 
-                        $query1 = "select * from nav_menu where menu_heading = '$heading'"; 
-                        $query_run = mysqli_query($con, $query1); 
-                        while($row_data=mysqli_fetch_array($query_run)){
-                            $menu = $row_data['menu_name'];
-                            $menu_level = $row_data['menu_level']; ?>
-                               <li class="<?php if ($menu_level == 1){echo 'menu-item-depth-1'; } else if ($menu_level == 2){ echo 'menu-item-depth-2'; }?>"><?php echo $menu; ?> </li>
-                        <?php
-                            }
-                            }
-
-                        ?>";
+<!--Script to display menu list-->
+<script type="text/javascript">    
+   function getData(){
+      var heading = document.getElementById( "heading1" );
+      var menu_heading = heading.options[ heading.selectedIndex ].value;
+        $(document).ready(function () {
+        $.ajax({ //create an ajax request to load_page.php
+                type: "POST",
+                url: "load_data.php",
+                data: { 
+                    heading: menu_heading
+                    },
+                
+                dataType: "html", //expect html to be returned                
+                success: function (response) {
+                    $("#list").html(response);
+                }
+            });
     });
+   }
+</script>
+
+
+<script type="text/javascript">
+    var heading = document.getElementById( "heading1" );
+    var menu_heading = heading.options[ heading.selectedIndex ].value;
+    $('#add_menu').click(function() {
+
+     $.ajax({
+      type: "POST",
+      url: "add_menu.php",
+      data: { 
+            heading: menu_heading
+            },
+      async: true,
+      success: function (response) {
+               //alert("Data Saved..");
+            }
+        });
+        });    
+
 </script>

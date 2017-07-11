@@ -1,11 +1,6 @@
 <footer class="text-center">Copyright &copy; by <a href="#">Metapercept Technology Services LLP</a> 2013 - <?php echo date('Y'); ?></footer>
 </div>   
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
+
 
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=jja8y394r1ufw48zj0luhqz1r20nzothmj1xvshr8qkqhjb4"></script>
 
